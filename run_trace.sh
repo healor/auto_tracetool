@@ -21,14 +21,14 @@ echo "Running trace programs : "$runtime""
 #echo "iostat root password" | sudo iostat -cdtx 5 $device >> iostat_"$timestamp".log &
 sudo blktrace -d $device -w $runtime -o blk_"$timestamp" > blk_"$timestamp".log &
 sudo iostat -cdtx 5 $device >> iostat_"$timestamp".log & 
-sudo ./run_smartctl.sh $device $runtime & 
+sudo ./do_smartctl.sh $device $timestamp & 
 
 echo ""$runtime"secs Waiting..."
 sleep "${runtime}"
 
 killall blktrace
 killall iostat
-killall run_smartctl.sh
+killall do_smartctl.sh
 
 mv *.log ./$timestamp
 mv blk_"$timestamp".* ./$timestamp
